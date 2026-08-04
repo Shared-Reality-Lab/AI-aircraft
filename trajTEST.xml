@@ -1,9 +1,35 @@
 <?xml version="1.0" ?>
 <aircraft>
+  <ac id="0">
+    <waypoints>
+      <waypoint lat="49.006226" lon="2.582553" speed="10"/>
+      <waypoint lat="49.009378" lon="2.582391" speed="10"/>
+      <waypoint lat="49.012524" lon="2.581962" speed="10"/>
+      <waypoint lat="49.018906" lon="2.581093" speed="10"/>
+      <waypoint lat="49.020004" lon="2.58031" speed="10"/>
+      <waypoint lat="49.02075" lon="2.57854" speed="10"/>
+      <waypoint lat="49.020876" lon="2.577746" speed="10"/>
+      <waypoint lat="49.020585" lon="2.570869" speed="10"/>
+      <waypoint lat="49.020354" lon="2.566835" speed="10"/>
+      <waypoint lat="49.020609" lon="2.566448" speed="10"/>
+      <waypoint lat="49.022497" lon="2.566047" speed="10"/>
+    </waypoints>
+  </ac>
   <ac id="1">
     <waypoints>
-      <waypoint lat="48.994523829975215" lon="2.5425573993000183" speed="-99"/>
-      <waypoint lat="49.00067714470375" lon="2.551798131711812" speed="10"/>
+      <waypoint lat="49.00846256540157" lon="2.586324703574405" speed="-99"/>
+      <waypoint lat="49.00835762457869" lon="2.5843614653384415" speed="10"/>
     </waypoints>
+  </ac>
+  <ac id="2">
+    <waypoints>
+      <waypoint lat="49.0093428694732" lon="2.586138851976773" speed="-99"/>
+      <waypoint lat="49.0090894787775" lon="2.5810222935275013" speed="10"/>
+      <waypoint lat="49.010087233091404" lon="2.5808353600730496" speed="5"/>
+    </waypoints>
+    <conflict type="intersection">
+      <location lat="49.00916389630154" lon="2.582386494132107"/>
+      <offset dist="0"/>
+    </conflict>
   </ac>
 </aircraft>

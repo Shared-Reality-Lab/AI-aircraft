@@ -56,7 +56,6 @@ class Aircraft:
             resx = self.client.getDREF(dref_speed_x.format(self.ID))
             resy = self.client.getDREF(dref_speed_y.format(self.ID))
             resz = self.client.getDREF(dref_speed_z.format(self.ID))
-            # res = abs(resx[0]+resy[0]+resz[0])
             res = math.sqrt(resx[0]**2 + resy[0]**2 + resz[0]**2)
         return res
 
@@ -222,8 +221,6 @@ class Aircraft:
         breaks[self.ID] = new_breaks_value
 
         self.client.sendDREF(dref_breaks, breaks)
-
-        # print(self.ID, breaks)
 
         return flag_speed_null
 

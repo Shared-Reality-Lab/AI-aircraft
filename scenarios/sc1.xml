@@ -15,14 +15,4 @@
       <waypoint lat="49.022497" lon="2.566047" speed="10"/>
     </waypoints>
   </ac>
-  <ac id="1">
-    <waypoints>
-      <waypoint lat="49.00935703417897" lon="2.5861184438028046" speed="-99"/>
-      <waypoint lat="49.00908942474822" lon="2.5810074141586803" speed="10"/>
-    </waypoints>
-    <conflict type="intersection">
-      <location lat="49.0091834108068" lon="2.5823863934339646"/>
-      <offset dist="0"/>
-    </conflict>
-  </ac>
 </aircraft>

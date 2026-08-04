@@ -163,6 +163,7 @@ class Interface(QWidget):
         self.endTrajectoryButton.setChecked(self.mapWidget.waitingForTrajectoryPoints)
 
     def save(self):
+        print("save")
         self.mapWidget.xml_class.write_all(self.mapWidget.allAircraft)
 
     def save_as(self):

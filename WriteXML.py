@@ -102,6 +102,6 @@ class WriteXML:
                 endLocation = ET.SubElement(conflictXML, 'end-position')
                 endLocation.set('lat', str(endPosition[0]))
                 endLocation.set('lon', str(endPosition[1]))
-
+        print({self.currentFilename})
         self.write(root, self.currentFilename)
         
