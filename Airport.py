@@ -23,7 +23,7 @@ class Airport:
         isFinished = False
         print("Looking for airport " + self.icaoCode + "...")
 
-        pathToAptData = r"apt.dat" # r"C:\X-Plane 11\Custom Scenery\Global Airports\Earth nav data\apt.dat"
+        pathToAptData = r"apt.dat"
         with open(pathToAptData, 'r', encoding="latin-1") as aptFile :
 
             for line in aptFile :
