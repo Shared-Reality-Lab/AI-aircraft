@@ -93,32 +93,6 @@ class Map(QWidget):
             ext2 = QPointF(ext2[0], ext2[1])
 
             painter.drawLine(ext1, ext2)
-
-        # for conflict in self.conflicts :
-        #     delta = zoom_point(conflict, self.zoom, self.offset, self.get_screen_size())
-        #     painter.drawEllipse(delta, 3, 3)
-
-        # trajectories_dico = list(self.trajectories_dico.values())
-        
-        # for trajectory in trajectories_dico:
-        #     tj_1 = trajectory[0]
-
-        #     ext1_geo = (tj_1[0], tj_1[1])
-        #     ext1_screen = geo_to_screen(ext1_geo, self.zoom, self.offset, self.airport.center, self.get_screen_size())
-        #     tj_1 = ext1_screen
-
-        #     for point in trajectory[1:]:
-
-        #         ext2_geo = (point[0], point[1])
-        #         ext2_screen = geo_to_screen(ext2_geo, self.zoom, self.offset, self.airport.center, self.get_screen_size())
-
-        #         painter.drawLine(ext1_screen, ext2_screen)
-
-        #         ext1_screen = ext2_screen
-
-        #     icon = QPixmap(r"images\user_position.jpg")
-        #     iconSize = 30 + 5*self.zoom
-        #     painter.drawPixmap(tj_1.x()-iconSize/2, tj_1.y()-iconSize/2, iconSize, iconSize, icon)
         
         pen.setWidth(4 + 5*self.zoom)
         painter.setPen(pen)
@@ -147,6 +121,13 @@ class Map(QWidget):
                 for conflict in currentConflicts:
                     geo_pos = conflict[0]
                     self.draw_conflict(geo_pos, painter)
+
+            currentFollow = self.currentAircraft.follow
+            if currentFollow['startFollowPosition'] != (0,0):
+                self.draw_conflict(currentFollow['startFollowPosition'], painter)
+
+                if currentFollow['endFollowPosition'] != (0,0):
+                    self.draw_conflict(currentFollow['endFollowPosition'], painter)
 
         for aircraft in self.allAircraft:
 
@@ -200,6 +181,13 @@ class Map(QWidget):
                 for conflict in aircraft.conflicts:
                     geo_pos = conflict[0]
                     self.draw_conflict(geo_pos, painter)
+
+                follow = aircraft.follow
+                if follow['startFollowPosition'] != (0,0):
+                    self.draw_conflict(follow['startFollowPosition'], painter)
+
+                    if follow['endFollowPosition'] != (0,0):
+                        self.draw_conflict(follow['endFollowPosition'], painter)
 
 
         painter.end()

@@ -149,14 +149,12 @@ class Interface(QWidget):
             previousAircraftItem = self.aircraftList.itemWidget(previous)
             if previousAircraftItem is not None:
                 previousAircraftItem.setSelected(False)
-                print(previousAircraftItem.aircraft)
         if current:
             if len(self.mapWidget.allAircraft) != 0:
                 self.end_trajectory()
                 currentAircraftItem = self.aircraftList.itemWidget(current)
                 self.mapWidget.currentAircraft = currentAircraftItem.aircraft
                 currentAircraftItem.setSelected(True)
-                print(currentAircraftItem.aircraft)
         self.setSize()
         self.update()
 
