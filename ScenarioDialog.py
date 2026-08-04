@@ -20,7 +20,8 @@ class ScenarioDialog(QDialog):
         layout.addWidget(bouton)
 
     def getScenario(self):
-        text_input = self.combo.currentText()
-        i = int(text_input[-1])
-        return f"scenarios\sc{i}.xml"
+        pass
+        # text_input = self.combo.currentText()
+        # i = int(text_input[-1])
+        # return f"scenarios\sc{i}.xml"
     
