@@ -76,7 +76,7 @@ class Aircraft:
         if mixture_value > 1 or mixture_value < 0 :
             print(f'Warning : mixture value out of bounds (aircraft {self.ID})')
             return
-        print(f'avant {mixture}')
+       
         mixture = list(self.client.getDREF(dref_mixture))
         print('=============================')
         print(f'apres {mixture}')
