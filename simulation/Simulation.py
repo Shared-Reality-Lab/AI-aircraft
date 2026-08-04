@@ -97,7 +97,7 @@ class Simulation:
 
                 lat = float(location.get('lat'))
                 lon = float(location.get('lon'))
-                offset = int(offset.get('dist'))
+                offset = int(float(offset.get('dist')))
 
                 # Check the type of conflict
                 if conflict_type == "intersection" :
