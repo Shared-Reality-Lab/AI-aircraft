@@ -1,0 +1,18 @@
+<conflicts>
+    <conflict n="4">
+        <waypoints>
+	    	<waypoint lat="49.009169" lon="2.582579"/> //for ac=4
+        </waypoints>
+	</conflict>
+    <conflict n="2">
+        <waypoints>
+	    	<waypoint lat="49.020691" lon="2.570868"/> //for ac=2
+        </waypoints>
+	</conflict>
+    <conflict n="6">
+        <waypoints>
+	    	<waypoint lat="49.020285" lon="2.563442"/> //for ac=6
+        </waypoints>
+	</conflict>
+</conflicts>
+

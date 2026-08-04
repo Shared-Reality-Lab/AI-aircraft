@@ -1,0 +1,63 @@
+
+<trajectories>
+	<trajectory ac-id="0">
+		<waypoints>
+			<waypoint lat="49.006226" lon="2.582553" speed="15"/>
+            <waypoint lat="49.009378" lon="2.582391" speed="15"/>
+            <waypoint lat="49.012524" lon="2.581962" speed="15"/>
+			<waypoint lat="49.018906" lon="2.581093" speed="15"/>
+            <waypoint lat="49.020004" lon="2.580310" speed="15"/>
+            <waypoint lat="49.020750" lon="2.578540" speed="15"/>
+            <waypoint lat="49.020876" lon="2.577746" speed="15"/>
+            <waypoint lat="49.020585" lon="2.570869" speed="15"/>
+            <waypoint lat="49.020354" lon="2.566835" speed="15"/>
+            <waypoint lat="49.020395" lon="2.567077" speed="15"/>
+			<waypoint lat="49.022497" lon="2.566047" speed="15"/>
+		</waypoints>
+	</trajectory>
+	<trajectory ac-id="4">
+		<waypoints>
+			<waypoint lat="49.009299" lon="2.586133" speed="14"/>
+			<waypoint lat="49.009148" lon="2.582453" speed="7"/>
+			<waypoint lat="49.009104" lon="2.581676" speed="5"/>
+			<waypoint lat="49.008950" lon="2.581260" speed="5"/>
+			<waypoint lat="49.008626" lon="2.581096" speed="5"/>
+			<waypoint lat="49.007580" lon="2.581118" speed="10"/>
+			<waypoint lat="49.006148" lon="2.581263" speed="10"/>
+		</waypoints>
+	</trajectory>
+	<!-- <trajectory ac-id="4">
+		<waypoints>
+			<waypoint lat="49.009299" lon="2.586133" speed="14"/>
+			<waypoint lat="49.009199" lon="2.582349" speed="12"/>
+			<waypoint lat="49.009016" lon="2.578969" speed="12"/> 
+            <waypoint lat="49.008582" lon="2.572526" speed="10"/>
+            <waypoint lat="49.007089" lon="2.571962" speed="10"/>
+		</waypoints>
+	</trajectory> -->
+	<trajectory ac-id="2">
+		<waypoints>
+			<waypoint lat="49.014801" lon="2.577245" speed="10"/>
+			<waypoint lat="49.014959" lon="2.580267" speed="7"/>
+			<waypoint lat="49.017253" lon="2.579999" speed="7"/>
+			<waypoint lat="49.019111" lon="2.579722" speed="15"/>
+			<waypoint lat="49.019646" lon="2.578880" speed="10"/>
+            <waypoint lat="49.019925" lon="2.578026" speed="10"/>
+            <waypoint lat="49.020004" lon="2.576805" speed="10"/>
+            <waypoint lat="49.019731" lon="2.571675" speed="12"/>
+            <waypoint lat="49.022519" lon="2.570584" speed="15"/>
+		</waypoints>
+	</trajectory>
+    <trajectory ac-id="6">
+		<waypoints>
+			<waypoint lat="49.022314" lon="2.548358" speed="5"/>
+            <waypoint lat="49.020826" lon="2.556612" speed="9"/>
+            <waypoint lat="49.021019" lon="2.562493" speed="9"/>
+			<waypoint lat="49.020296" lon="2.563475" speed="10"/>
+            <waypoint lat="49.020308" lon="2.566065" speed="10"/>
+            <waypoint lat="49.019687" lon="2.566416" speed="10"/>
+            <waypoint lat="49.019533" lon="2.568446" speed="15"/>
+		</waypoints>
+	</trajectory>
+	
+</trajectories>

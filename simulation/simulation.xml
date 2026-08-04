@@ -1,0 +1,22 @@
+<aircraft>
+    <ac id="2">
+        <conflict type = "lead-follow">
+            <location lat = "49.017253" lon = "2.579999"/>
+            <offset dist = "100"/>
+            <slow-down dist = "300" reduc = "-5"/> //dist in meter and reduc in kt
+        </conflict>
+    </ac>
+    <ac id="4"> // the nearest 
+        <conflict type = "lead-follow">
+            <location lat ="49.009148" lon = "2.582453"/>
+            <offset dist = "0"/>
+            <slow-down dist = "150" reduc = "-10"/>
+        </conflict>
+    </ac>
+    <ac id="6"> // the farest
+        <conflict type = "intersection">
+            <location lat = "49.020285" lon = "2.563442"/>
+            <offset dist = "100"/>
+        </conflict>
+    </ac>
+</aircraft>
