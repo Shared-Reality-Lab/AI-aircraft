@@ -78,8 +78,6 @@ class Aircraft:
             return
        
         mixture = list(self.client.getDREF(dref_mixture))
-        print('=============================')
-        print(f'apres {mixture}')
         
         mixture[self.ID] = mixture_value
         self.client.sendDREF(dref_mixture, tuple(mixture))
@@ -203,7 +201,6 @@ class Aircraft:
         """
 
         current_speed = self.getSPEED()
-        print(f"ai speed {self.ID}: {current_speed}")
 
         # Detect if aircraft is not moving
         if current_speed < 1.0 :

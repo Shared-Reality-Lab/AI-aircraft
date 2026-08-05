@@ -39,8 +39,7 @@ class Simulation:
         
         """
         # Load and analyse XML file
-        # tree = ET.parse(r'C:\Users\Corentin\Desktop\ADAIR_SURF_XPlane_SVS\McGill\trajTEST.xml')
-        tree = ET.parse(Path(__file__).parent.parent/'trajTEST.xml')
+        tree = ET.parse(Path(__file__).parent.parent/'interface'/'trajTEST.xml')
         root = tree.getroot()
 
         # Create a main list for all trajectory information
@@ -66,7 +65,6 @@ class Simulation:
 
             # Add all information about the current trajectory list to the main list
             xml_list.append(current_trajectory)
-
         return xml_list
 
     def Read_XMLSimu(self):
@@ -74,8 +72,7 @@ class Simulation:
         
         """
         # Load and analyse XML file
-        # tree = ET.parse(r'C:\Users\Corentin\Desktop\ADAIR_SURF_XPlane_SVS\McGill\trajTEST.xml')
-        tree = ET.parse(Path(__file__).parent.parent/'trajTEST.xml')
+        tree = ET.parse(Path(__file__).parent.parent/'interface'/'trajTEST.xml')
         root = tree.getroot()
 
         # Create 2 main lists for all conflicts and lead-follows information
@@ -108,8 +105,6 @@ class Simulation:
                     dist_before_slow = int(slow_down.get('dist'))
                     speed_reduction = int(slow_down.get('reduc'))
                     leadFollow_dico[ac_id] = [(lat, lon), offset, dist_before_slow, speed_reduction]
-            
-        print(f'intersection = {intersections_dico}, follow = {leadFollow_dico}')
 
         return intersections_dico, leadFollow_dico
 
@@ -117,19 +112,11 @@ class Simulation:
         """Create Aircraft objects and set controls and positions of each aircraft
         
         """
-
-        test = 1
-
+        
         # Read XML simulation file
         xml_list = self.Read_XML()
 
-        # if test == 0 :
-        #     # initialize the conflicts
-        #     conflict_offset = int(input("Please select the desired safety distance between the two aircraft (in meters): ")) #in meters
-        #     conflicts_dico = self.Read_XMLC()
-
-        if test == 1:
-            intersections_dico, followings_dico = self.Read_XMLSimu()
+        intersections_dico, followings_dico = self.Read_XMLSimu()
         
         # Enable all gears
         self.client.sendDREF(dref_gear, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
@@ -165,7 +152,9 @@ class Simulation:
             
             # Initialize controls and positions of every aircrafts
             sleep(1)
-            if ac.ID != 0 :
+            if ac.ID == 0 :
+                ac.setPOST([xml_list[i][1], xml_list[i][2], 110.20504630126953, -1.0, 0.6105514168739319, 190, 1.0])
+            elif ac.ID != 0 :
                 ac.setCTRL([0.0, 0.0, 0.0, 0.5, 1.0, 0.0, 0.0])
                 ac.setPOST([xml_list[i][1], xml_list[i][2], 110.20504630126953, -1.0, 0.6105514168739319, 190, 1.0])
             sleep(1)
@@ -179,10 +168,7 @@ class Simulation:
             # Enable mixture
             ac.set_mixture(1.0)
         
-        if test == 1 :
-            return aircraft_list, xml_list, followings_dico, intersections_dico
-
-        return aircraft_list, xml_list, conflicts_dico, conflict_offset
+        return aircraft_list, xml_list, followings_dico, intersections_dico
 
 
     def main_loop(self, aircraft_list, xml_list, followings_dico, intersections_dico):
@@ -208,7 +194,7 @@ class Simulation:
         wp_lon = [0] * 20
         wp_vel = [0] * 20
 
-        i = 0
+        i = 1
         # Loop that goes through every aircrafts
         for ac in aircraft_list :
             ac_ID = ac.ID
@@ -279,17 +265,13 @@ class Simulation:
 
                                 if flag1 == 0 :
                                     target_speed = ac.correct_speed2(conflict_pos, offset)
-                                    print(f'zone 1 ac{ac_ID} ts = {target_speed}')
                                 else :
                                     # print(f'speed_ac{ac_ID} = {ac.getSPEED()*1.944:.1f}')
                                     if flag2 == 0 :
                                         target_speed = user_vel
-                                        print(f'zone 2 ac{ac_ID} ts = {target_speed}')
                                         user_pos = self.client.getPOSI()
-                                        print(f'distance between 2 ac{ac_ID} : {distance(ac.current_position(), (user_pos[0], user_pos[1])).meters}')
                                     else :
                                         target_speed = flag2 + reduced_speed
-                                        print(f'zone 3 ac{ac_ID} ts = {target_speed}')
 
                                 list_target_speed[ac_ID].append(round(target_speed*1.944, 1)) # in kt
                                 
@@ -298,7 +280,6 @@ class Simulation:
                                 if flag1 == 0 and ac.reached_target(conflict_pos[0], conflict_pos[1]) == 1 :
                                     flagd[ac_ID] = current_position
                                     flag_figure[ac_ID][0] = j
-                                    print("flag1 reached")
 
                                 if flag1 != 0 and flag2 == 0 and distance(current_position, flag1).meters >= slow_distance :
                                     flagf[ac_ID] = ac.getSPEED() + 1
@@ -307,10 +288,8 @@ class Simulation:
                                         reduced_speed = flagf[ac_ID]
                                         flag_end_movement[ac_ID] = 1
                                         ac.show1(list_AI_speed[ac_ID], list_user_speed[ac_ID], list_target_speed[ac_ID], flag_figure[ac_ID])
-                                    print("flag2 reached")
 
                             elif ac_ID in intersections_dico :
-                                print("OK")
                                 infos = intersections_dico[ac_ID]
                                 conflict_pos = infos[0]
                                 offset = infos[1]
@@ -336,7 +315,7 @@ class Simulation:
 
                             # Stops simulation if an ai aircraft is not moving for 40 ms
                             if flag_speed_null[ac_ID] >= 4 :
-                                print(f'Error : aircraft {ac_ID} not moving')
+                                print(f'Aircraft {ac_ID} not moving')
                                 flag_speed_null[ac_ID] = 0
                                 # return
                             ac.correct_heading(wp_lat[ac_ID], wp_lon[ac_ID])
@@ -344,7 +323,6 @@ class Simulation:
 
                             if flag == 1 :
                                 waypoint_numer = (index_waypoint[ac_ID] //3) + 1
-                                print(f'wp {waypoint_numer} reached : ac{ac_ID}')
 
                                 index_waypoint[ac_ID] += 3
                                 flag_end, wp_lat[ac_ID], wp_lon[ac_ID], wp_vel[ac_ID] = ac.next_waypoint(xml_list, index_waypoint[ac_ID])
