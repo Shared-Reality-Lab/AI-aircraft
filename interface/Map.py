@@ -15,7 +15,6 @@ class Map(QWidget):
 
         self.center = self.rect().center()
         self.airport = apt
-        # self.scenario = scenario
         self.zoom = 0.1
         self.offset = QPointF()
 
@@ -30,8 +29,6 @@ class Map(QWidget):
 
         self.allAircraft = []
         self.currentAircraft = Aircraft()
-
-        # self.trajectories_dico = {}
     
     def get_screen_size(self):
         return self.width(), self.height()
@@ -149,7 +146,6 @@ class Map(QWidget):
                 ext1 = geo_to_screen(start, self.zoom, self.offset, self.airport.center, self.get_screen_size())
                 start = ext1
                 for waypoint in trajectory[1:]:
-                    # point = waypoint[0]
                     ext2 = geo_to_screen(waypoint, self.zoom, self.offset, self.airport.center, self.get_screen_size())
                     painter.drawLine(ext1, ext2)
                     ext1 = ext2
@@ -161,14 +157,10 @@ class Map(QWidget):
 
                 if len(trajectory)>=2:
                     start = trajectory[0]
-                    # ext1 = zoom_point(start, self.zoom, self.offset, self.get_screen_size())
                     ext1 = geo_to_screen(start, self.zoom, self.offset, self.airport.center, self.get_screen_size())
                     start = ext1
 
                     for waypoint in trajectory[1:]:
-                        # point = waypoint[0]
-
-                        # ext2 = zoom_point(point, self.zoom, self.offset, self.get_screen_size())
                         ext2 = geo_to_screen(waypoint, self.zoom, self.offset, self.airport.center, self.get_screen_size())
                         painter.drawLine(ext1, ext2)
                         if aircraft is self.currentAircraft:
@@ -220,19 +212,7 @@ class Map(QWidget):
 
             if self.waitingForIntersectionPoint or self.waitingForFollowPoint or self.waitingForEndFollow:
                 screen_pos = event.pos()
-                # delta = inv_zoom_point(screen_pos, self.zoom, self.offset, self.get_screen_size())
-                # self.conflicts.append(delta)
-                # self.update()
-
-                # utm_pos = screen_to_utm(screen_pos, self.zoom, self.offset, self.airport.center, self.get_screen_size())
                 geo_pos = screen_to_geo(screen_pos, self.zoom, self.offset, self.airport.center, self.get_screen_size(), self.airport.zoneNumber, self.airport.zoneLetter)
-
-                # offset, ok = QInputDialog.getInt(self, "Entrée","Entrez un entier :", value=0)
-                # if ok :
-                #     self.xml_class.intersection_type(geo_pos, offset)
-                #     self.xml_class.write()
-                # else :
-                #     self.conflicts = self.conflicts[:-1]
 
                 self.edit = QLineEdit(self)
                 self.edit.setGeometry(event.x(), event.y(), 40, 25)
@@ -240,12 +220,10 @@ class Map(QWidget):
                 self.edit.show()
                 self.edit.setFocus()
                 self.edit.returnPressed.connect(lambda: self.validate(geo_pos))
-                
-            
+                        
             if self.waitingForTrajectoryPoints:
                 screen_pos = event.pos()
                 geo_pos = screen_to_geo(screen_pos, self.zoom, self.offset, self.airport.center, self.get_screen_size(), self.airport.zoneNumber, self.airport.zoneLetter)
-                # delta = inv_zoom_point(screen_pos, self.zoom, self.offset, self.get_screen_size())
                 waypoint = geo_pos
                 self.currentAircraft.trajectory.append(waypoint)
                 self.update()
@@ -286,35 +264,8 @@ class Map(QWidget):
             self.last_pos = event.pos()
             self.update()
 
-    def mouseReleaseEvent(self, event):
-        pass
-
-    # def read_trajectories(self):
-    #     userAircraft = Aircraft()
-        
-    #     tree = ET.parse(self.scenario)
-    #     root = tree.getroot()
-
-    #     for trajectory in root.findall('trajectory'):
-            
-    #         # Get aircraft ID
-    #         ac_id = int(trajectory.get('ac-id'))
-    #         self.trajectories_dico[ac_id] = []
-            
-    #         # Analyze waypoints the aircraft will have to go to
-    #         waypoints = trajectory.find('waypoints')
-            
-    #         # Go through every waypoint coordinates and store them in the local list
-    #         if waypoints is not None:
-    #             for waypoint in waypoints.findall('waypoint'):
-    #                 lat = float(waypoint.get('lat'))
-    #                 lon = float(waypoint.get('lon'))
-    #                 speed = float(waypoint.get('speed')) #* 0.5144 #Conversion noeuds -> m/s
-    #                 self.trajectories_dico[ac_id].append([lat, lon, speed])
-    #                 userAircraft.trajectory.append(((lat, lon), speed))
-    #     self.allAircraft.append(userAircraft)
-
-    def read_trajectories(self, scenario):
+    def read_trajectories(self):
+        scenario = self.xml_class.currentFilename
         tree = ET.parse(scenario)
         root = tree.getroot()
 
@@ -323,7 +274,6 @@ class Map(QWidget):
             # Get aircraft ID
             ac_id = int(aircraft.get('id'))
             currentAircraft = Aircraft(ac_id)
-            # self.trajectories_dico[ac_id] = []
             
             # Analyze waypoints the aircraft will have to go to
             waypoints = aircraft.find('waypoints')
@@ -334,11 +284,10 @@ class Map(QWidget):
                     lat = float(waypoint.get('lat'))
                     lon = float(waypoint.get('lon'))
                     speed = float(waypoint.get('speed')) #* 0.5144 #Conversion noeuds -> m/s
-                    # self.trajectories_dico[ac_id].append([lat, lon, speed])
+
                     currentAircraft.trajectory.append((lat, lon))
                     currentAircraft.segmentSpeed[ac_id] = speed
 
-            # conflict = aircraft.find('conflict')
             for conflict in aircraft.findall('conflict'):
                 if conflict is not None:
                     typeConflict = conflict.get('type')
@@ -366,6 +315,3 @@ class Map(QWidget):
                         currentAircraft.conflicts.append(((lat, lon), offsetDist))
                         
             self.allAircraft.append(currentAircraft)
-
-
-# https://www.w3schools.com/python/trypython.asp?filename=demo_ref_string_split2

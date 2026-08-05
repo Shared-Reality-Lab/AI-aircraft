@@ -19,8 +19,9 @@ dref_breaks    = "sim/multiplayer/controls/parking_brake"
 
 class Simulation:
 
-    def __init__(self, client):
+    def __init__(self, client, scenario):
         self.client = client
+        self.scenario = scenario
 
     def printDREF(self, dref):
         """Print a specific Dref
@@ -39,7 +40,7 @@ class Simulation:
         
         """
         # Load and analyse XML file
-        tree = ET.parse(Path(__file__).parent.parent/'interface'/'trajTEST.xml')
+        tree = ET.parse(self.scenario)
         root = tree.getroot()
 
         # Create a main list for all trajectory information
@@ -72,7 +73,7 @@ class Simulation:
         
         """
         # Load and analyse XML file
-        tree = ET.parse(Path(__file__).parent.parent/'interface'/'trajTEST.xml')
+        tree = ET.parse(self.scenario)
         root = tree.getroot()
 
         # Create 2 main lists for all conflicts and lead-follows information
@@ -232,10 +233,10 @@ class Simulation:
 
             try :
 
-                # print the user velocity
+                # print user velocity
                 user_vel = self.client.getDREF(dref_user_velocity)[0]
                 print(f'user_velocity = {user_vel*1.944:.1f} kt')
-                # print(aircraft_list)
+
                 for ac in aircraft_list :
 
                     ac_ID = ac.ID
@@ -266,7 +267,6 @@ class Simulation:
                                 if flag1 == 0 :
                                     target_speed = ac.correct_speed2(conflict_pos, offset)
                                 else :
-                                    # print(f'speed_ac{ac_ID} = {ac.getSPEED()*1.944:.1f}')
                                     if flag2 == 0 :
                                         target_speed = user_vel
                                         user_pos = self.client.getPOSI()
@@ -296,10 +296,7 @@ class Simulation:
 
                                 # target_speed is different before and after the intersection conflict
                                 if flagf[ac_ID] == 0 :
-                                    print(f'speed_ac{ac_ID} = {ac.getSPEED()*1.944:.1f}')
                                     target_speed = ac.correct_speed2(conflict_pos, offset)
-                                    # print(target_speed)
-                                    # print(f'brakes {list(self.client.getDREF(dref_breaks))[1]}')
                                 else :
                                     target_speed = wp_vel[ac_ID]
 

@@ -87,18 +87,6 @@ class Interface(QWidget):
 
         card = AircraftItem(self.mapWidget.currentAircraft)
 
-        # item = QListWidgetItem()
-        # item.setSizeHint(card.sizeHint())
-
-        # self.aircraftList.setCurrentItem(item)
-
-        # card.deleteRequested.connect(lambda w=card, i=item: self.remove_plane(i, w))
-        # card.intersectionRequested.connect(lambda w=card, i=item: self.add_intersection(i,w))
-        # card.followRequested.connect(lambda w=card, i=item: self.add_follow(i,w))
-
-        # self.aircraftList.addItem(item)
-        # self.aircraftList.setItemWidget(item, card)
-
         self.add_item(card)
 
         self.mapWidget.waitingForTrajectoryPoints = True
@@ -173,7 +161,7 @@ class Interface(QWidget):
             "",
             "XML files (*.xml)"
         )
-        if filename:  # user didn't canceled
+        if filename:
             if not filename.endswith(".xml"):
                 filename += ".xml"
             self.mapWidget.xml_class.write_all(self.mapWidget.allAircraft, filename)
@@ -185,7 +173,8 @@ class Interface(QWidget):
 
         if filename:
             self.mapWidget.allAircraft = []
-            self.mapWidget.read_trajectories(filename)
+            self.mapWidget.xml_class.currentFilename = filename
+            self.mapWidget.read_trajectories()
             for aircraft in self.mapWidget.allAircraft:
                 if aircraft.ID != 0:
                     aircraftItem = AircraftItem(aircraft)
@@ -220,7 +209,7 @@ class Interface(QWidget):
                 event.ignore()
         elif clicked == discardBtn:
             event.accept()
-        else:  # cancelBtn
+        else: 
             event.ignore()
 
     def getAircraftItem(self, aircraft):

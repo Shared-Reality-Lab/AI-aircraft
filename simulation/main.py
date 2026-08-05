@@ -1,4 +1,6 @@
 from time import sleep
+import sys
+from PySide6.QtWidgets import QApplication, QFileDialog
 import xpc
 import CoordConverter
 import Terrain
@@ -26,15 +28,26 @@ def main():
         table_override_planepath = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         client.sendDREF(dref_override_planepath, table_override_planepath)
 
-        # SIMULATION
-        sim = Simulation(client)
+        app = QApplication(sys.argv)
+        scenario, _ = QFileDialog.getOpenFileName(None, "Open scenario", "", "XML files (*.xml);;All files (*)")
 
-        aircraft_list, xml_list, test_follow, test_intersec = sim.Initialize()
-        print('Starting main loop...')
-        sleep(2)
-        sim.main_loop(aircraft_list, xml_list, test_follow, test_intersec)
+        if scenario:
+
+             # SIMULATION
+            sim = Simulation(client, scenario)
+
+            aircraft_list, xml_list, test_follow, test_intersec = sim.Initialize()
+            print('Starting main loop...')
+            sleep(2)
+            sim.main_loop(aircraft_list, xml_list, test_follow, test_intersec)
+            
+            input("End of simulation, press any key to exit...")
         
-        input("End of simulation, press any key to exit...")
+        else :
+            print("Please choose your scenario")
+            sys.exit()
+
+        sys.exit(app.exec())
 
 
 if __name__ == "__main__": 

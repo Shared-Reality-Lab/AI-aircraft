@@ -36,22 +36,8 @@ class AircraftItem(QFrame):
         self.mainLayout.addWidget(title)
         self.mainLayout.addLayout(buttons)
 
-        # self.setStyleSheet("""QFrame {
-        #                         background-color: white;
-        #                         border: 2px solid #999;
-        #                         border-radius: 8px;}
-
-        #                     QPushButton {
-        #                         padding: 4px;}
-
-        #                     QLabel {
-        #                         font-size: 12pt;
-        #                         font-weight: bold;}
-        #                     """)
-
         self.formWidget = None
         self.speedLayout = None
-        # self.editsSpeed = []
 
     def ask_delete(self):
         self.deleteRequested.emit(self)

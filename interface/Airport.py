@@ -47,7 +47,6 @@ class Airport:
                                 geo_zone = get_geo_zone(center_lat, center_lon)
                                 self.zoneNumber = geo_zone[0]
                                 self.zoneLetter = geo_zone[1]
-                                # print("centre =", self.center)
 
 
                         elif elmt0 == "100":
@@ -66,9 +65,7 @@ class Airport:
                             side2 = [runwayNumber2, geo_to_utm(lat2, lon2)]
 
                             runway = Runway(width, surfaceCode, side1, side2)
-                            # print("runway point =", runway.side1[1])
                             self.runways.append(runway)
-                            # print(f"Runway created : {runway}")
 
                         elif elmt0 == "1201":
                             idNode = int(line[4])

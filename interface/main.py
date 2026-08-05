@@ -2,7 +2,6 @@ from Airport import Airport
 from PySide6.QtWidgets import QApplication
 from Interface import Interface
 from WriteXML import WriteXML
-from ScenarioDialog import ScenarioDialog
 import sys
 
 def main():

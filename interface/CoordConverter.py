@@ -45,19 +45,3 @@ def screen_to_geo(pos, zoom, offset, center, screen_size, zoneNumber, zoneLetter
     utm_pos = screen_to_utm(pos, zoom, offset, center, screen_size)
     geo_pos = utm_to_geo(utm_pos.x(), utm_pos.y(), zoneNumber, zoneLetter)
     return geo_pos
-
-# def zoom_point(pos, zoom, offset, screen_size):
-#     width = screen_size[0]
-#     height = screen_size[1]
-#     delta = QPointF(width/2, height/2)
-
-#     return pos * zoom + (1-zoom) * delta + offset
-
-# def inv_zoom_point(pos, zoom, offset, screen_size):
-#     width = screen_size[0]
-#     height = screen_size[1]
-
-#     x = (pos.x() - (1-zoom) * (width/2) - offset.x()) / zoom
-#     y = (pos.y() - (1-zoom) * (height/2) - offset.y()) / zoom
-
-#     return QPointF(x,y)
