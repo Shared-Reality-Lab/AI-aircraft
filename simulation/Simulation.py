@@ -314,7 +314,7 @@ class Simulation:
                             if flag_speed_null[ac_ID] >= 4 :
                                 print(f'Aircraft {ac_ID} not moving')
                                 flag_speed_null[ac_ID] = 0
-                                # return
+                                
                             ac.correct_heading(wp_lat[ac_ID], wp_lon[ac_ID])
                             flag = ac.reached_target(wp_lat[ac_ID], wp_lon[ac_ID])
 
@@ -330,7 +330,6 @@ class Simulation:
                                     flag_end_movement[ac_ID] = 1
                                     if ac_ID in followings_dico : ac.show1(list_AI_speed[ac_ID], list_user_speed[ac_ID], list_target_speed[ac_ID], flag_figure[ac_ID])
                             
-                            # flag_follow_begin = ac.reached_target(conflict_pos[0], conflict_pos[1])
                 j += 1
                 sleep(0.5)
 

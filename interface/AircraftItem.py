@@ -55,20 +55,21 @@ class AircraftItem(QFrame):
 
     def setSpeedChoice(self):
         trajectory = self.aircraft.trajectory
+        
         if len(trajectory) >= 2:
             self.formWidget = QWidget()
             self.speedLayout = QFormLayout(self.formWidget)
+
             for segmentID in range(1, len(trajectory)):
                 edit = QLineEdit()
                 edit.setPlaceholderText("in knots")
                 edit.setText("10")
                 label = f"Speed {segmentID}"
                 self.speedLayout.addRow(label, edit)
-
                 self.aircraft.segmentSpeed[segmentID] = "10"
                 edit.textChanged.connect(lambda speed, index=segmentID: self.updateSegmentValue(speed, index))
-            self.mainLayout.addWidget(self.formWidget)
 
+            self.mainLayout.addWidget(self.formWidget)
         self.update()
 
     def updateSegmentValue(self, speed, index):

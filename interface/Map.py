@@ -17,7 +17,6 @@ class Map(QWidget):
         self.airport = apt
         self.zoom = 0.1
         self.offset = QPointF()
-
         self.last_pos = QPointF(0,0)
 
         self.xml_class = xml_class
@@ -49,7 +48,6 @@ class Map(QWidget):
 
     def draw_conflict(self, position, painter):
         screen_pos = geo_to_screen(position, self.zoom, self.offset, self.airport.center, self.get_screen_size())
-        
         pen = QPen(Qt.red)
         pen.setWidth(10 + 5*self.zoom)
         painter.setPen(pen)
@@ -77,7 +75,6 @@ class Map(QWidget):
             ext1 = QPointF(ext1[0],ext1[1])
             ext2 = utm_to_screen(runway.side2[1], self.zoom, self.offset, self.airport.center, self.get_screen_size())
             ext2 = QPointF(ext2[0], ext2[1])
-
             painter.drawLine(ext1, ext2)
         
         pen.setWidth(2+ 5*self.zoom)
@@ -88,7 +85,6 @@ class Map(QWidget):
             ext1 = QPointF(ext1[0],ext1[1])
             ext2 = utm_to_screen(taxiSegment.node2.pos, self.zoom, self.offset, self.airport.center, self.get_screen_size())
             ext2 = QPointF(ext2[0], ext2[1])
-
             painter.drawLine(ext1, ext2)
         
         pen.setWidth(4 + 5*self.zoom)
@@ -127,7 +123,6 @@ class Map(QWidget):
                     self.draw_conflict(currentFollow['endFollowPosition'], painter)
 
         for aircraft in self.allAircraft:
-
             trajectory = aircraft.trajectory
 
             if aircraft.ID == 0:
@@ -181,7 +176,6 @@ class Map(QWidget):
                     if follow['endFollowPosition'] != (0,0):
                         self.draw_conflict(follow['endFollowPosition'], painter)
 
-
         painter.end()
 
     def wheelEvent(self, event: QWheelEvent):
@@ -191,12 +185,10 @@ class Map(QWidget):
         mapPos = (mapPos.x(), mapPos.y())
         
         delta = event.angleDelta().y()
-
         if delta > 0:
             self.zoom *= 1.1
         else:
             self.zoom *= 0.9
-
         self.zoom = max(0.01, min(self.zoom, 10))
 
         newMousePos = utm_to_screen(mapPos, self.zoom, self.offset, self.airport.center, self.get_screen_size())
@@ -207,7 +199,6 @@ class Map(QWidget):
         self.update()
 
     def mousePressEvent(self, event):
-
         if event.button() == Qt.RightButton:
 
             if self.waitingForIntersectionPoint or self.waitingForFollowPoint or self.waitingForEndFollow:
@@ -229,11 +220,9 @@ class Map(QWidget):
                 self.update()
 
         if event.button() == Qt.LeftButton:
-
             self.last_pos = event.pos()
 
     def validate(self, geo_pos):
-
         for aircraft in self.allAircraft:
             if aircraft.ID == self.currentAircraft.ID:
                 if self.waitingForEndFollow:
@@ -257,7 +246,6 @@ class Map(QWidget):
         self.edit.deleteLater()
 
     def mouseMoveEvent(self, event):
-
         if event.buttons() & Qt.LeftButton:
             delta = event.pos() - self.last_pos
             self.offset += delta

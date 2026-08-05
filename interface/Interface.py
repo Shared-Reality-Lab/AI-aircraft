@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QListWidget, QLabel, QPushButton, QListWidgetItem, QFileDialog, QMessageBox
-
 from PySide6.QtCore import Signal
 from PySide6.QtGui import QCloseEvent
 from Map import Map
@@ -86,17 +85,14 @@ class Interface(QWidget):
         self.mapWidget.currentAircraft = Aircraft(firstAvailableId)
 
         card = AircraftItem(self.mapWidget.currentAircraft)
-
         self.add_item(card)
 
         self.mapWidget.waitingForTrajectoryPoints = True
         self.updateOKButton()
 
     def add_item(self, card):
-        
         item = QListWidgetItem()
         item.setSizeHint(card.sizeHint())
-
         self.aircraftList.setCurrentItem(item)
 
         card.deleteRequested.connect(lambda w=card, i=item: self.remove_plane(i, w))
@@ -146,7 +142,6 @@ class Interface(QWidget):
         self.setSize()
         self.update()
 
-
     def updateOKButton(self):
         self.endTrajectoryButton.setChecked(self.mapWidget.waitingForTrajectoryPoints)
 
@@ -195,7 +190,6 @@ class Interface(QWidget):
 
         msgBox.setDefaultButton(overwriteBtn)
         msgBox.exec_()
-
         clicked = msgBox.clickedButton()
 
         if clicked == overwriteBtn:
@@ -219,13 +213,11 @@ class Interface(QWidget):
 
             if widget.aircraft.ID == aircraft.ID:
                 return widget
-
         return None
 
     def setSize(self):
         for i in range(self.aircraftList.count()):
             item = self.aircraftList.item(i)
             widget = self.aircraftList.itemWidget(item)
-
             if widget is not None:
                 item.setSizeHint(widget.sizeHint())

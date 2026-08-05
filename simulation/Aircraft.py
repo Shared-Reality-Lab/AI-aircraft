@@ -230,7 +230,7 @@ class Aircraft:
                     target_speed : target speed in m/s
                     conflict_pos : tuple (latitude, longitude)
         """
-
+        
         ia_position = self.client.getPOSI(self.ID)
         ia_pos = (ia_position[0], ia_position[1])
         user_position = self.client.getPOSI()
@@ -253,20 +253,16 @@ class Aircraft:
         return (current_pos[0], current_pos[1])
         
 
-    def show1(self, liste_vitessesAI, liste_vitessesMOI, list_target_speed, flag_reduced_speed):
-
+    def show1(self, AIVelocity, userVelocity, list_target_speed, flag_reduced_speed):
         plt.figure()
         
-        x_axis = [i for i in range(len(liste_vitessesAI))]
-        plt.plot(x_axis, liste_vitessesAI, label="AI")
-        plt.plot(x_axis, liste_vitessesMOI, label="User")
+        x_axis = [i for i in range(len(AIVelocity))]
+        plt.plot(x_axis, AIVelocity, label="AI")
+        plt.plot(x_axis, userVelocity, label="User")
         plt.scatter(x_axis, list_target_speed, label="Target", color="black")
 
         plt.axvline(x = flag_reduced_speed[0], color="red", linestyle="--", linewidth=2)
         plt.axvline(x = flag_reduced_speed[1], color="red", linestyle="--", linewidth=2)
-
-        if len(liste_vitessesAI) != len(list_target_speed) or len(list_target_speed) != len(liste_vitessesMOI) :
-            plt.grid(True)
 
         plt.legend()
         plt.title(f"Speed comparison with ac{self.ID}")
