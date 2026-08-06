@@ -29,14 +29,8 @@
     </waypoints>
     <conflict type="intersection">
       <location lat="49.00918948519386" lon="2.5823546668094846"/>
-      <offset dist="0"/>
+      <offset dist="0.0"/>
     </conflict>
-  </ac>
-  <ac id="3">
-    <waypoints>
-      <waypoint lat="49.008274034856065" lon="2.5828415976290535" speed="0"/>
-      <waypoint lat="49.00848706146783" lon="2.5862818927898092" speed="5"/>
-    </waypoints>
   </ac>
   <ac id="4">
     <waypoints>
@@ -49,9 +43,15 @@
     </waypoints>
     <conflict type="lead-follow">
       <location lat="49.015064461218614" lon="2.5815748562730354"/>
-      <offset dist="300"/>
+      <offset dist="300.0"/>
       <slow-down dist="442" reduc="-5"/>
       <end-position lat="49.01902472536439" lon="2.580985044219602"/>
     </conflict>
+  </ac>
+  <ac id="3">
+    <waypoints>
+      <waypoint lat="49.00847273045978" lon="2.586282011523885" speed="0"/>
+      <waypoint lat="49.008290726761494" lon="2.583495014135449" speed="10"/>
+    </waypoints>
   </ac>
 </aircraft>
