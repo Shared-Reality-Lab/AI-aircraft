@@ -1,5 +1,5 @@
 from PySide6.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit
-from PySide6.QtCore import QPoint, Qt, QPointF, QRect
+from PySide6.QtCore import QPoint, Qt, QPointF, QRect, Signal
 from PySide6.QtGui import QPainter, QPen, QColor, QWheelEvent, QPalette, QPixmap, QBrush
 from CoordConverter import utm_to_screen, screen_to_utm, utm_to_geo, geo_to_utm, geo_to_screen, screen_to_geo #, zoom_point , inv_zoom_point, 
 import xml.etree.ElementTree as ET
@@ -9,6 +9,7 @@ from AircraftItem import AircraftItem
 class Map(QWidget):
 
     def __init__(self, apt, xml_class):
+
         super().__init__()
 
         self.setStyleSheet("background: lightgrey;")
@@ -25,6 +26,7 @@ class Map(QWidget):
         self.waitingForFollowPoint = False
         self.waitingForEndFollow = False
         self.waitingForTrajectoryPoints = False
+        self.hideConflicts = False
 
         self.allAircraft = []
         self.currentAircraft = Aircraft()
@@ -165,16 +167,18 @@ class Map(QWidget):
                     self.draw_node(ext2, painter)
                     self.draw_start(start, aircraft.ID, painter)
 
-                for conflict in aircraft.conflicts:
-                    geo_pos = conflict[0]
-                    self.draw_conflict(geo_pos, painter)
+                if not self.hideConflicts:
+                    
+                    for conflict in aircraft.conflicts:
+                        geo_pos = conflict[0]
+                        self.draw_conflict(geo_pos, painter)
 
-                follow = aircraft.follow
-                if follow['startFollowPosition'] != (0,0):
-                    self.draw_conflict(follow['startFollowPosition'], painter)
+                    follow = aircraft.follow
+                    if follow['startFollowPosition'] != (0,0):
+                        self.draw_conflict(follow['startFollowPosition'], painter)
 
-                    if follow['endFollowPosition'] != (0,0):
-                        self.draw_conflict(follow['endFollowPosition'], painter)
+                        if follow['endFollowPosition'] != (0,0):
+                            self.draw_conflict(follow['endFollowPosition'], painter)
 
         painter.end()
 

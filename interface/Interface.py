@@ -18,6 +18,8 @@ class Interface(QWidget):
         self.mapWidget = Map(apt, xml_class)
         self.aircraftList = QListWidget()
         self.aircraftList.currentItemChanged.connect(self.on_list_selection)
+        self.aircraftList.itemClicked.connect(self.on_item_clicked)
+        self._lastSelectedItem = None
 
         rightPanel = QVBoxLayout()
         rightPanel.addWidget(QLabel("Aircraft list"))
@@ -34,6 +36,10 @@ class Interface(QWidget):
         self.addPlaneButton = QPushButton('+')
         self.addPlaneButton.clicked.connect(self.add_plane)
         rightPanel.addWidget(self.addPlaneButton)
+
+        self.hideConflictsButton = QPushButton('Hide conflicts')
+        self.hideConflictsButton.clicked.connect(self.hide_conflicts)
+        rightPanel.addWidget(self.hideConflictsButton)
 
         loadLayout = QHBoxLayout()
         loadButton = QPushButton('Load file')
@@ -139,8 +145,18 @@ class Interface(QWidget):
                 currentAircraftItem = self.aircraftList.itemWidget(current)
                 self.mapWidget.currentAircraft = currentAircraftItem.aircraft
                 currentAircraftItem.setSelected(True)
+        self._lastSelectedItem = current
         self.setSize()
         self.update()
+
+    def on_item_clicked(self, item):
+        if item is self._lastSelectedItem:
+            aircraftItem = self.aircraftList.itemWidget(item)
+            if aircraftItem is not None:
+                self.mapWidget.currentAircraft = aircraftItem.aircraft
+                aircraftItem.setSelected(True)
+                self.setSize()
+                self.update()
 
     def updateOKButton(self):
         self.endTrajectoryButton.setChecked(self.mapWidget.waitingForTrajectoryPoints)
@@ -221,3 +237,12 @@ class Interface(QWidget):
             widget = self.aircraftList.itemWidget(item)
             if widget is not None:
                 item.setSizeHint(widget.sizeHint())
+
+    def hide_conflicts(self):
+        isHidden = self.mapWidget.hideConflicts
+        if isHidden:
+            self.mapWidget.hideConflicts = False
+            self.hideConflictsButton.setText("Hide conflicts")
+        else:
+            self.mapWidget.hideConflicts = True
+            self.hideConflictsButton.setText("Show conflicts")
