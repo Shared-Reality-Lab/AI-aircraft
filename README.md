@@ -142,7 +142,7 @@ Le bouton **`Delete`** sur la carte d'un aéronef le retire de la liste et de la
    python main.py
    ```
 
-3. Le script se connecte à X-Plane, désactive l'autopilote et le suivi de trajectoire natif des aéronefs IA, puis lit le scénario XML (par défaut `../interface/trajTEST.xml`) pour initialiser les positions et trajectoires.
+3. Le script se connecte à X-Plane, désactive l'autopilote et le suivi de trajectoire natif des aéronefs IA, puis demande de charger le scénario XML à lire pour initialiser les positions et trajectoires.
 4. La boucle principale déplace ensuite chaque aéronef IA le long de ses waypoints, en gérant les éventuels conflits (intersection ou lead-follow) définis dans l'éditeur :
    - *Intersection* : ajustement de vitesse pour respecter le décalage temporel/spatial au point de croisement.
    - *Lead-follow* : l'aéronef ralentit et se cale sur la vitesse de l'utilisateur avant de reprendre sa trajectoire normale.
