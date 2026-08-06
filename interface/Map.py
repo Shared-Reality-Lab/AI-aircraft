@@ -48,16 +48,23 @@ class Map(QWidget):
         pen.setWidth(4 + 5*self.zoom)
         painter.setPen(pen)
 
-    def draw_conflict(self, position, painter):
+    def draw_intersection(self, position, painter):
         screen_pos = geo_to_screen(position, self.zoom, self.offset, self.airport.center, self.get_screen_size())
         pen = QPen(Qt.red)
         pen.setWidth(10 + 5*self.zoom)
         painter.setPen(pen)
         painter.drawEllipse(screen_pos, 3, 3)
 
+    def draw_follow(self, position, painter):
+        screen_pos = geo_to_screen(position, self.zoom, self.offset, self.airport.center, self.get_screen_size())
+        pen = QPen(Qt.darkRed)
+        pen.setWidth(7 + 5*self.zoom)
+        painter.setPen(pen)
+        painter.drawEllipse(screen_pos, 3, 3)
+
     def draw_node(self, position, painter):
         pen = QPen(Qt.black)
-        pen.setWidth(5 + 5*self.zoom)
+        pen.setWidth(2 + 5*self.zoom)
         painter.setPen(pen)
         painter.drawEllipse(position, 3, 3)
         
@@ -111,18 +118,18 @@ class Map(QWidget):
                 
                 self.draw_start(start, self.currentAircraft.ID, painter)
             
-            currentConflicts = self.currentAircraft.conflicts
+            currentConflicts = self.currentAircraft.intersections
             if len(currentConflicts) != 0:
                 for conflict in currentConflicts:
                     geo_pos = conflict[0]
-                    self.draw_conflict(geo_pos, painter)
+                    self.draw_intersection(geo_pos, painter)
 
             currentFollow = self.currentAircraft.follow
             if currentFollow['startFollowPosition'] != (0,0):
-                self.draw_conflict(currentFollow['startFollowPosition'], painter)
+                self.draw_follow(currentFollow['startFollowPosition'], painter)
 
                 if currentFollow['endFollowPosition'] != (0,0):
-                    self.draw_conflict(currentFollow['endFollowPosition'], painter)
+                    self.draw_follow(currentFollow['endFollowPosition'], painter)
 
         for aircraft in self.allAircraft:
             trajectory = aircraft.trajectory
@@ -168,17 +175,17 @@ class Map(QWidget):
                     self.draw_start(start, aircraft.ID, painter)
 
                 if not self.hideConflicts:
-                    
-                    for conflict in aircraft.conflicts:
+
+                    for conflict in aircraft.intersections:
                         geo_pos = conflict[0]
-                        self.draw_conflict(geo_pos, painter)
+                        self.draw_intersection(geo_pos, painter)
 
                     follow = aircraft.follow
                     if follow['startFollowPosition'] != (0,0):
-                        self.draw_conflict(follow['startFollowPosition'], painter)
+                        self.draw_follow(follow['startFollowPosition'], painter)
 
                         if follow['endFollowPosition'] != (0,0):
-                            self.draw_conflict(follow['endFollowPosition'], painter)
+                            self.draw_follow(follow['endFollowPosition'], painter)
 
         painter.end()
 
@@ -243,7 +250,7 @@ class Map(QWidget):
                     self.waitingForEndFollow = True
 
                 if self.waitingForIntersectionPoint:
-                    aircraft.conflicts.append((geo_pos, offset))
+                    aircraft.intersections.append((geo_pos, offset))
                     self.waitingForIntersectionPoint = False                
 
         self.edit.hide()
@@ -304,6 +311,6 @@ class Map(QWidget):
                         currentAircraft.follow['endFollowPosition'] = (endLat, endLon)
 
                     else:
-                        currentAircraft.conflicts.append(((lat, lon), offsetDist))
+                        currentAircraft.intersections.append(((lat, lon), offsetDist))
                         
             self.allAircraft.append(currentAircraft)

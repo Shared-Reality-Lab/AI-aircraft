@@ -42,7 +42,7 @@ class WriteXML:
                 else:
                     waypoint.set('speed', "10")
 
-            for conflict in aircraft.conflicts:
+            for conflict in aircraft.intersections:
                 position = conflict[0]
                 offset_value = conflict[1]
 

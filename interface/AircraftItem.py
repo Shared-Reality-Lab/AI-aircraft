@@ -102,7 +102,7 @@ class AircraftItem(QFrame):
             self.conflictsWidget.deleteLater()
             self.conflictsWidget = None
         
-        if len(self.aircraft.conflicts) == 0 and self.aircraft.follow['offset'] == -999:
+        if len(self.aircraft.intersections) == 0 and self.aircraft.follow['offset'] == -999:
             return
 
         self.conflictsWidget = QWidget()
@@ -114,7 +114,7 @@ class AircraftItem(QFrame):
         conflictsLayout.addWidget(header)
 
         if len(self.aircraft.conflicts) != 0:
-            for conflict in self.aircraft.conflicts:
+            for conflict in self.aircraft.intersections:
                 text = self.intersectionInformation(conflict)
                 conflictsLayout.addWidget(QLabel(text))
 
@@ -138,8 +138,6 @@ class AircraftItem(QFrame):
 
 
 # a faire :
-# changer icon follow (couleur par exemple)
-# remplacer "conflicts" par "intersection"
 # mettre conflit comme objet avec attribut type
 # ajouter commentaires
 # ajouter README

@@ -4,7 +4,7 @@ class Aircraft:
         self.ID = ID
         self.trajectory = []
         self.segmentSpeed = {}
-        self.conflicts = []
+        self.intersections = []
         self.follow = {'startFollowPosition':(0,0), 'endFollowPosition':(0,0), 'offset':-999, 'reducedSpeed':-999}
 
     def __repr__(self):
