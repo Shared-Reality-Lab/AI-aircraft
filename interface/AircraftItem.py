@@ -135,9 +135,3 @@ class AircraftItem(QFrame):
 
     def __repr__(self):
         return f'Aircraft Item {self.aircraft.ID}'
-
-
-# a faire :
-# mettre conflit comme objet avec attribut type
-# ajouter commentaires
-# ajouter README
