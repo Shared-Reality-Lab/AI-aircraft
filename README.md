@@ -23,10 +23,8 @@ McGill/
 │   ├── Runway.py                    # Modèle de piste
 │   ├── TaxiwayNode.py               # Modèle de nœud de taxiway
 │   ├── TaxiwaySegment.py            # Modèle de segment de taxiway
-│   ├── ScenarioDialog.py            # (optionnel, non branché par défaut) choix de scénario prédéfini
 │   ├── scenarios/                   # Exemples de scénarios XML prêts à charger
 │   ├── images/                      # Icônes utilisées pour l'affichage (positions AI / utilisateur)
-│   └── trajTEST.xml                 # Dernier scénario exporté par l'éditeur (lu par la simulation)
 └── simulation/                  # Module de simulation X-Plane
     ├── main.py                   # Point d'entrée : connexion X-Plane, lance la boucle de simulation
     ├── Simulation.py              # Lecture du XML, initialisation et boucle principale des aéronefs
